@@ -24,11 +24,10 @@ def multi_round_selection(candidates):
             if "✔" in exp or "+" in exp
         )
 
-        if matched_skills >= 2:
+        if matched_skills >= 1:
             c["decision"] = "Hire"
-        elif matched_skills == 1:
-            c["decision"] = "Consider"
-        else:
+        elif matched_skills == 0:
             c["decision"] = "Reject"
+
 
     return candidates[:10]
