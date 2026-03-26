@@ -38,7 +38,12 @@ def rank_candidates_node(state):
 
 def multi_round_node(state):
     print("📊 Multi-round screening...")
-    final = multi_round_selection(state["ranked_candidates"])
+
+    final = multi_round_selection(
+        state["ranked_candidates"],
+        state["requirements"]   # ✅ ADD THIS
+    )
+
     return {**state, "final_candidates": final}
 
 def generate_report_node(state):
