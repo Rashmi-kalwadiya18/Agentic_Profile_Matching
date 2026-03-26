@@ -19,15 +19,20 @@ def score_candidate(candidate, requirements):
 
 def multi_round_selection(candidates):
     for c in candidates:
-        matched_skills = sum(
-            1 for exp in c.get("explanation", [])
-            if "✔" in exp or "+" in exp
-        )
+        explanation = c.get("explanation", [])
 
-        if matched_skills >= 1:
-            c["decision"] = "Hire"
-        elif matched_skills == 0:
+        # Count matches
+        matched = sum(1 for exp in explanation if "✔" in exp or "+" in exp)
+        missing = sum(1 for exp in explanation if "✗" in exp or "X" in exp)
+
+        # 🚨 IMPORTANT RULE
+        if missing > 0:
             c["decision"] = "Reject"
-
+        elif matched >= 2:
+            c["decision"] = "Hire"
+        elif matched == 1:
+            c["decision"] = "Consider"
+        else:
+            c["decision"] = "Reject"
 
     return candidates[:10]
