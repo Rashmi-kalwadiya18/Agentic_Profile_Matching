@@ -19,7 +19,10 @@ def score_candidate(candidate, requirements):
 
 def multi_round_selection(candidates):
     for c in candidates:
-        matched_skills = len(c.get("explanation", []))
+        matched_skills = sum(
+            1 for exp in c.get("explanation", [])
+            if "✔" in exp or "+" in exp
+        )
 
         if matched_skills >= 2:
             c["decision"] = "Hire"
